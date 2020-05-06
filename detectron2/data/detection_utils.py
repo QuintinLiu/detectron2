@@ -464,3 +464,12 @@ def build_transform_gen(cfg, is_train):
         tfm_gens.append(T.RandomFlip())
         logger.info("TransformGens used in training: " + str(tfm_gens))
     return tfm_gens
+ 
+def my_transform_instance_annotations(
+    annotation, transforms, image_size, *, keypoint_hflip_indices=None
+):
+    # Note that bbox is 1d (per-instance bounding box)
+    annotation["bbox"] = transforms.apply_rotated_box(np.asarray([annotation['bbox']]))[0]
+    annotation["bbox_mode"] = BoxMode.XYWHA_ABS
+
+    return annotation
