@@ -44,6 +44,8 @@ _PREDEFINED_SPLITS_COCO["coco"] = {
     "coco_2017_test": ("coco/test2017", "coco/annotations/image_info_test2017.json"),
     "coco_2017_test-dev": ("coco/test2017", "coco/annotations/image_info_test-dev2017.json"),
     "coco_2017_val_100": ("coco/val2017", "coco/annotations/instances_val2017_100.json"),
+    "coco_2017_train_rbbox": ("coco/train2017", "coco/annotations/instances_train2017_rbbox.json"),
+    "coco_2017_val_rbbox": ("coco/val2017", "coco/annotations/instances_val2017_rbbox.json"),
 }
 
 _PREDEFINED_SPLITS_COCO["coco_person"] = {
@@ -205,6 +207,8 @@ def register_all_pascal_voc(root):
         ("voc_2012_trainval", "VOC2012", "trainval"),
         ("voc_2012_train", "VOC2012", "train"),
         ("voc_2012_val", "VOC2012", "val"),
+        ("voc_of_icdar2013_trainval", "VOC_of_ICDAR2013", "trainval"),
+        ("voc_of_icdar2013_test", "VOC_of_ICDAR2013", "test"),
     ]
     for name, dirname, split in SPLITS:
         year = 2007 if "2007" in name else 2012

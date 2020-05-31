@@ -129,7 +129,7 @@ Category ids in annotations are not in [1, #categories]! We'll apply a mapping f
 
     dataset_dicts = []
 
-    ann_keys = ["iscrowd", "bbox", "keypoints", "category_id"] + (extra_annotation_keys or ["rbbox", "angle"])
+    ann_keys = ["iscrowd", "bbox", "keypoints", "category_id"] + (extra_annotation_keys or ["rbbox"])
 
     num_instances_without_valid_segmentation = 0
 
@@ -178,13 +178,8 @@ Category ids in annotations are not in [1, #categories]! We'll apply a mapping f
 
             #obj["bbox_mode"] = BoxMode.XYWH_ABS
             obj["bbox_mode"] = BoxMode.XYWHA_ABS
-            obj["abbox"] = obj["bbox"]
-            rbbox = obj["rbbox"]
-            obj["bbox"] = [0.25 * np.sum(rbbox[0::2]),
-                           0.25 * np.sum(rbbox[1::2]),
-                           np.sqrt((rbbox[0] - rbbox[2])**2 + (rbbox[1] - rbbox[3])**2),
-                           np.sqrt((rbbox[2] - rbbox[4])**2 + (rbbox[3] - rbbox[5])**2),
-                           obj["angle"]]
+            obj["rbbox"][4] *= -1
+            obj["bbox"] = obj["rbbox"]
 
             if id_map:
                 obj["category_id"] = id_map[obj["category_id"]]
