@@ -329,7 +329,7 @@ def convert_to_coco_dict(dataset_name):
             # COCO requirement: XYWH box format
             bbox = annotation["bbox"]
             bbox_mode = annotation["bbox_mode"]
-            bbox = BoxMode.convert(bbox, bbox_mode, BoxMode.XYWH_ABS)
+            #bbox = BoxMode.convert(bbox, bbox_mode, BoxMode.XYWH_ABS)
 
             # COCO requirement: instance area
             if "segmentation" in annotation:
@@ -345,7 +345,8 @@ def convert_to_coco_dict(dataset_name):
                     raise TypeError(f"Unknown segmentation type {type(segmentation)}!")
             else:
                 # Computing areas using bounding boxes
-                bbox_xy = BoxMode.convert(bbox, BoxMode.XYWH_ABS, BoxMode.XYXY_ABS)
+                #bbox_xy = BoxMode.convert(bbox, BoxMode.XYWH_ABS, BoxMode.XYXY_ABS)
+                bbox_xy = BoxMode.convert(bbox, BoxMode.XYWHA_ABS, BoxMode.XYXY_ABS)
                 area = Boxes([bbox_xy]).area()[0].item()
 
             if "keypoints" in annotation:

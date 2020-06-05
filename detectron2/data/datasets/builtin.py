@@ -27,6 +27,8 @@ from .lvis import get_lvis_instances_meta, register_lvis_instances
 from .pascal_voc import register_pascal_voc
 from .register_coco import register_coco_instances, register_coco_panoptic_separated
 
+from .icdar15 import register_icdar15
+
 # ==== Predefined datasets and splits for COCO ==========
 
 _PREDEFINED_SPLITS_COCO = {}
@@ -207,8 +209,6 @@ def register_all_pascal_voc(root):
         ("voc_2012_trainval", "VOC2012", "trainval"),
         ("voc_2012_train", "VOC2012", "train"),
         ("voc_2012_val", "VOC2012", "val"),
-        ("voc_of_icdar2013_trainval", "VOC_of_ICDAR2013", "trainval"),
-        ("voc_of_icdar2013_test", "VOC_of_ICDAR2013", "test"),
     ]
     for name, dirname, split in SPLITS:
         year = 2007 if "2007" in name else 2012
@@ -222,3 +222,6 @@ register_all_coco(_root)
 register_all_lvis(_root)
 register_all_cityscapes(_root)
 register_all_pascal_voc(_root)
+
+register_icdar15('icdar_2015_train', os.path.join(_root, 'ICDAR2015'), 'train')
+register_icdar15('icdar_2015_test', os.path.join(_root, 'ICDAR2015'), 'test')

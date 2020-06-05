@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 """
 Detection Training Script.
 
@@ -54,7 +52,7 @@ class MyTrainer(DefaultTrainer):
         """
         if output_folder is None:
             output_folder = os.path.join(cfg.OUTPUT_DIR, "inference")
-        evaluator_list = [RotatedCOCOEvaluator(dataset_name, cfg, True, output_folder)]
+        evaluator_list = [RotatedCOCOEvaluator(dataset_name, cfg, False, output_folder)]
         return DatasetEvaluators(evaluator_list)
 
     @classmethod

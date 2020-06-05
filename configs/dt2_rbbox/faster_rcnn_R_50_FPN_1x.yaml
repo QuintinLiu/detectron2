@@ -1,4 +1,4 @@
-_BASE_: "/home/appuser/detectron2_repo/configs/Base-RCNN-FPN.yaml"
+_BASE_: "../Base-RCNN-FPN.yaml"
 MODEL:
   WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
   MASK_ON: False
@@ -13,6 +13,17 @@ MODEL:
     BBOX_REG_WEIGHTS: (1,1,1,1,1,)
   ROI_BOX_HEAD:
     POOLER_TYPE: ROIAlignRotated
-    BBOX_REG_WEIGHTS: (10,10,5,5,1)
+    BBOX_REG_WEIGHTS: (10,10,5,5,10)
   ROI_HEADS:
     NAME: RROIHeads
+    NUM_CLASSES: 2
+SOLVER:
+  IMS_PER_BATCH: 4
+  BASE_LR: 0.005
+  CHECKPOINT_PERIOD: 1000
+INPUT:
+  MIN_SIZE_TRAIN: (688, 720, 752)
+  MIN_SIZE_TEST: 720
+DATASETS:
+  TRAIN: ('icdar_2015_train',)
+  TEST: ('icdar_2015_test',)
