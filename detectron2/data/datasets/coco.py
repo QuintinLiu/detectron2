@@ -178,7 +178,6 @@ Category ids in annotations are not in [1, #categories]! We'll apply a mapping f
 
             #obj["bbox_mode"] = BoxMode.XYWH_ABS
             obj["bbox_mode"] = BoxMode.XYWHA_ABS
-            obj["rbbox"][4] *= -1
             obj["bbox"] = obj["rbbox"]
 
             if id_map:
@@ -346,8 +345,9 @@ def convert_to_coco_dict(dataset_name):
             else:
                 # Computing areas using bounding boxes
                 #bbox_xy = BoxMode.convert(bbox, BoxMode.XYWH_ABS, BoxMode.XYXY_ABS)
-                bbox_xy = BoxMode.convert(bbox, BoxMode.XYWHA_ABS, BoxMode.XYXY_ABS)
-                area = Boxes([bbox_xy]).area()[0].item()
+                #bbox_xy = BoxMode.convert(bbox, BoxMode.XYWHA_ABS, BoxMode.XYXY_ABS)
+                #area = Boxes([bbox_xy]).area()[0].item()
+                area = bbox[2] * bbox[3]
 
             if "keypoints" in annotation:
                 keypoints = annotation["keypoints"]  # list[int]

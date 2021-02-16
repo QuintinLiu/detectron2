@@ -176,7 +176,7 @@ class CommonMetricPrinter(EventWriter):
         iteration = storage.iter
 
         try:
-            data_time = storage.history("data_time").avg(20)
+            data_time = storage.history("data_time").avg(50)
         except KeyError:
             # they may not exist in the first few iterations (due to warmup)
             # or when SimpleTrainer is not used

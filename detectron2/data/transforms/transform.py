@@ -229,6 +229,11 @@ def HFlip_rotated_box(transform, rotated_boxes):
     rotated_boxes[:, 0] = transform.width - rotated_boxes[:, 0]
     # Transform angle
     rotated_boxes[:, 4] = -rotated_boxes[:, 4]
+
+    rotated_boxes[:, 4] = (rotated_boxes[:, 4] + 90) % 90
+    r = np.nonzero(rotated_boxes[:, 4] != 0)[0][:, np.newaxis]
+    rotated_boxes[r, [2, 3]] = rotated_boxes[r, [3, 2]]
+
     return rotated_boxes
 
 
@@ -256,6 +261,24 @@ def Resize_rotated_box(transform, rotated_boxes):
     return rotated_boxes
 
 
+def Rotate_rotated_box(transform, rotated_boxes):
+    assert rotated_boxes.ndim == 2 and rotated_boxes.shape[1] == 5, f'shape error: {rotated_boxes.shape}'
+    rot_cxcy = transform.apply_coords(rotated_boxes[:, :2])
+    rotated_boxes[:, :2] = rot_cxcy
+    rotated_boxes[:, 4] += transform.angle
+
+    idx = np.nonzero(rotated_boxes[:, 4] >= 90)[0][:, np.newaxis]
+    rotated_boxes[idx, 4] -= 90
+    rotated_boxes[idx, [2, 3]] = rotated_boxes[idx, [3, 2]]
+
+    idx = np.nonzero(rotated_boxes[:, 4] < 0)[0][:, np.newaxis]
+    rotated_boxes[idx, 4] += 90
+    rotated_boxes[idx, [2, 3]] = rotated_boxes[idx, [3, 2]]
+
+    return rotated_boxes
+
+
 HFlipTransform.register_type("rotated_box", HFlip_rotated_box)
 NoOpTransform.register_type("rotated_box", lambda t, x: x)
 ResizeTransform.register_type("rotated_box", Resize_rotated_box)
+RotationTransform.register_type("rotated_box", Rotate_rotated_box)

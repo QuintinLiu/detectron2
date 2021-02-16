@@ -202,6 +202,23 @@ def _get_coco_instances_meta():
     }
     return ret
 
+def _get_mini_coco_instances_meta():
+    #catIds_selected = [1, 3, 13, 16, 28, 41, 44, 59, 62, 81]
+    #catIds_selected = [1, 44, 84, 3, 62, 47, 10, 67, 51, 31]
+    catIds_selected = [1, 44, 3, 62, 47, 10, 67, 51]
+    MINI_COCO_CATEGORIES = [c for c in COCO_CATEGORIES if c["id"] in catIds_selected]
+    thing_ids = [k["id"] for k in MINI_COCO_CATEGORIES if k["isthing"] == 1]
+    thing_colors = [k["color"] for k in MINI_COCO_CATEGORIES if k["isthing"] == 1]
+    assert len(thing_ids) == 8, len(thing_ids)
+    # Mapping from the incontiguous COCO category id to an id in [0, 79]
+    thing_dataset_id_to_contiguous_id = {k: i for i, k in enumerate(thing_ids)}
+    thing_classes = [k["name"] for k in MINI_COCO_CATEGORIES if k["isthing"] == 1]
+    ret = {
+        "thing_dataset_id_to_contiguous_id": thing_dataset_id_to_contiguous_id,
+        "thing_classes": thing_classes,
+        "thing_colors": thing_colors,
+    }
+    return ret
 
 def _get_coco_panoptic_separated_meta():
     """
@@ -239,6 +256,8 @@ def _get_coco_panoptic_separated_meta():
 def _get_builtin_metadata(dataset_name):
     if dataset_name == "coco":
         return _get_coco_instances_meta()
+    if dataset_name == "mini_coco":
+        return _get_mini_coco_instances_meta()
     if dataset_name == "coco_panoptic_separated":
         return _get_coco_panoptic_separated_meta()
     elif dataset_name == "coco_person":

@@ -27,7 +27,7 @@ from .lvis import get_lvis_instances_meta, register_lvis_instances
 from .pascal_voc import register_pascal_voc
 from .register_coco import register_coco_instances, register_coco_panoptic_separated
 
-from .icdar15 import register_icdar15
+from .icdar import register_icdar15
 
 # ==== Predefined datasets and splits for COCO ==========
 
@@ -46,8 +46,15 @@ _PREDEFINED_SPLITS_COCO["coco"] = {
     "coco_2017_test": ("coco/test2017", "coco/annotations/image_info_test2017.json"),
     "coco_2017_test-dev": ("coco/test2017", "coco/annotations/image_info_test-dev2017.json"),
     "coco_2017_val_100": ("coco/val2017", "coco/annotations/instances_val2017_100.json"),
-    "coco_2017_train_rbbox": ("coco/train2017", "coco/annotations/instances_train2017_rbbox.json"),
-    "coco_2017_val_rbbox": ("coco/val2017", "coco/annotations/instances_val2017_rbbox.json"),
+    #"coco_2017_train_rbbox": ("coco/train2017", "coco/annotations/instances_train2017_rbbox_from_opencv_new.json"),
+    #"coco_2017_val_rbbox": ("coco/val2017", "coco/annotations/instances_val2017_rbbox_from_opencv_new.json"),
+}
+
+_PREDEFINED_SPLITS_COCO["mini_coco"] = {
+    #"coco_2017_train_mini_rbbox": ("coco/train2017", "coco/annotations/instances_train2017_rbbox_10000imgs_10cats_v1.json"),
+    #"coco_2017_val_mini_rbbox": ("coco/val2017", "coco/annotations/instances_val2017_rbbox_1000imgs_10cats_v1.json"),
+    "coco_2017_train_mini_rbbox": ("coco/train2017", "coco/annotations/instances_train2017_rbbox_10000imgs_8cats_v0.json"),
+    "coco_2017_val_mini_rbbox": ("coco/val2017", "coco/annotations/instances_val2017_rbbox_500imgs_8cats_v0.json"),
 }
 
 _PREDEFINED_SPLITS_COCO["coco_person"] = {

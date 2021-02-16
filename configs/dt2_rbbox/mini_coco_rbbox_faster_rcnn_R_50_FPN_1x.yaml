@@ -1,0 +1,37 @@
+_BASE_: "../Base-RCNN-FPN.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  MASK_ON: False
+  RESNETS:
+    DEPTH: 50
+  ANCHOR_GENERATOR:
+    NAME: RotatedAnchorGenerator
+    SIZES: [[32], [64], [128], [256], [512]]
+    #SIZES: [[16], [32], [64], [128], [256]]
+    #ANGLES: [[-80, -60, -40, -20, 0, 20, 40, 60, 80]]
+    #ANGLES: [[20, 50, 80]]
+    ANGLES: [[0, 20, 40, 60, 80]]
+    ASPECT_RATIOS: [[0.5, 1.0, 2]]
+    #ASPECT_RATIOS: [[0.3, 0.7, 1.0, 1.43, 3.33]]
+  PROPOSAL_GENERATOR:
+    NAME: RRPN
+  RPN:
+    BBOX_REG_WEIGHTS: (1,1,1,1,1,)
+  ROI_BOX_HEAD:
+    POOLER_TYPE: ROIAlignRotated
+    BBOX_REG_WEIGHTS: (10,10,5,5,5)
+  ROI_HEADS:
+    NAME: RROIHeads
+    NUM_CLASSES: 8
+SOLVER:
+  MAX_ITER: 30000
+  STEPS: (21000,)
+  IMS_PER_BATCH: 4
+  BASE_LR: 0.005
+  CHECKPOINT_PERIOD: 2500
+TEST:
+  EVAL_PERIOD: 2500
+DATASETS:
+  TRAIN: ('coco_2017_train_mini_rbbox',)
+  TEST: ('coco_2017_val_mini_rbbox',)
+OUTPUT_DIR: './output'

@@ -227,7 +227,7 @@ class MyDatasetMapper:
                     obj, transforms, image_shape
                 )
                 for obj in dataset_dict.pop("annotations")
-                if obj.get("iscrowd", 0) == 0
+                #if obj.get("iscrowd", 0) == 0
             ]
             instances = utils.annotations_to_instances_rotated(
                 annos, image_shape
